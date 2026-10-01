@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>My Store</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="clothe.html">Clothing</a>
+            <a href="techno.html">Technology</a>
+            <a href="shoes.html">Shoes</a>
+            <a href="cool_things.html">Cool Things</a>
+            <a href="accessor.html">Accessories</a>
+        </nav>
+    </header>
+    <main>
+        <section class="welcome">
+            <h2>Clothing</h2>
+            <p>Discover our clothing collection.</p>
+        </section>
+        <section id="products">
+        </section>
+    </main>
+    <footer>
+        <p>My Fake Store</p>
+    </footer>
+</body>
+<script>
+    fetch("http://127.0.0.1:8000/api/products")
+        .then(response => response.json())
+        .then(data => {
+            let products = document.getElementById("products");
+            data.forEach(product => {
+                if (product.category_id == 1) {
+                    let article = document.createElement("article");
+                    let image = document.createElement("img");
+                    image.src = product.images;
+                    image.alt = product.title;
+                    image.loading = "lazy";
+                    let name = document.createElement("h2");
+                    name.textContent = product.title;
+                    let price = document.createElement("h3");
+                    price.textContent = "$" + product.price;
+                    let description = document.createElement("p");
+                    description.textContent = product.description;
+                    article.appendChild(image);
+                    article.appendChild(name);
+                    article.appendChild(price);
+                    article.appendChild(description);
+                    products.appendChild(article);
+                }
+            });
+            console.log("Clothing:", data);
+        })
+</script>
+</html>
